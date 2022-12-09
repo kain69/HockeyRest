@@ -1,5 +1,6 @@
 package ru.karmazin.hockeybackend.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.karmazin.hockeybackend.exception.NotFoundException;
@@ -14,12 +15,9 @@ import java.util.Optional;
  */
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class TeamService {
     private final TeamRepository teamRepository;
-
-    public TeamService(TeamRepository teamRepository) {
-        this.teamRepository = teamRepository;
-    }
 
     public List<Team> findAll() {
         return teamRepository.findAll();
@@ -46,7 +44,6 @@ public class TeamService {
 
     @Transactional
     public void delete(int id) {
-        Team team = this.findOne(id);
-        teamRepository.delete(team);
+        teamRepository.delete(this.findOne(id));
     }
 }

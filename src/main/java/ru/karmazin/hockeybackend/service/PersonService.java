@@ -1,5 +1,6 @@
 package ru.karmazin.hockeybackend.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.karmazin.hockeybackend.model.Person;
@@ -14,12 +15,9 @@ import java.util.Optional;
  */
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class PersonService {
     private final PersonRepository personRepository;
-
-    public PersonService(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
 
     public List<Person> findAll() {
         return personRepository.findAll();
@@ -45,7 +43,6 @@ public class PersonService {
 
     @Transactional
     public void delete(int id) {
-        Person person = this.findOne(id);
-        personRepository.delete(person);
+        personRepository.delete(this.findOne(id));
     }
 }
