@@ -1,10 +1,13 @@
 package ru.karmazin.hockeybackend.model;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * @author Vladislav Karmazin
@@ -20,6 +23,10 @@ public class Team {
     private int id;
     @NotEmpty(message = "Name should not be empty")
     private String name;
+
+    @OneToMany(mappedBy = "team")
+    @JsonIgnore
+    private List<Player> players;
 
     public Team(String name) {
         this.name = name;

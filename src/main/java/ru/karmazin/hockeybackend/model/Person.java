@@ -1,6 +1,7 @@
 package ru.karmazin.hockeybackend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author Vladislav Karmazin
@@ -37,6 +39,10 @@ public class Person {
     @Max(value = 5, message = "Rating should be between 0 and 5")
     @NotNull(message = "Rating should not be empty")
     private Integer rating;
+
+    @OneToMany(mappedBy = "person")
+    @JsonIgnore
+    private List<Player> players;
 
     public Person(String name, String surname, String patronymic, LocalDate birthday, Integer rating) {
         this.name = name;

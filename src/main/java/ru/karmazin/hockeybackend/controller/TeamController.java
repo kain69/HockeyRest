@@ -18,7 +18,7 @@ import java.util.List;
  * @author Vladislav Karmazin
  */
 @RestController
-@RequestMapping("/teams")
+@RequestMapping("/api/teams")
 public class TeamController {
     private final TeamService teamService;
 

@@ -7,8 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.karmazin.hockeybackend.exception.NotCreatedException;
-import ru.karmazin.hockeybackend.model.Person;
-import ru.karmazin.hockeybackend.service.PersonService;
+import ru.karmazin.hockeybackend.model.Player;
+import ru.karmazin.hockeybackend.service.PlayerService;
 
 import java.util.List;
 
@@ -16,27 +16,27 @@ import java.util.List;
  * @author Vladislav Karmazin
  */
 @RestController
-@RequestMapping("/api/people")
-public class PersonController {
+@RequestMapping("/api/teams/{team_id}/players")
+public class PlayerController {
+    private final PlayerService playerService;
 
-    private final PersonService personService;
-
-    public PersonController(PersonService personService) {
-        this.personService = personService;
+    public PlayerController(PlayerService playerService) {
+        this.playerService = playerService;
     }
 
     @GetMapping
-    public List<Person> getPeople() {
-        return personService.findAll();
+    public List<Player> getPlayers(@PathVariable("team_id") int team_id) {
+        return playerService.findAllByTeamId(team_id);
     }
 
     @GetMapping("{id}")
-    public Person getPerson(@PathVariable int id) {
-        return personService.findOne(id);
+    public Player getPlayer(@PathVariable("id") int id) {
+        return playerService.findOne(id);
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> createPerson(@RequestBody @Valid Person person,
+    public ResponseEntity<HttpStatus> createPlayer(@PathVariable("team_id") int team_id,
+                                                   @RequestBody @Valid Player player,
                                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
@@ -51,7 +51,7 @@ public class PersonController {
             throw new NotCreatedException(errorMsg.toString());
         }
 
-        personService.save(person);
+        playerService.save(player, team_id);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
