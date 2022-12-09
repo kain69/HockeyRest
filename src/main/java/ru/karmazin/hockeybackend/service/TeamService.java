@@ -2,7 +2,7 @@ package ru.karmazin.hockeybackend.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.karmazin.hockeybackend.entity.Team;
+import ru.karmazin.hockeybackend.model.Team;
 import ru.karmazin.hockeybackend.exception.NotFoundException;
 import ru.karmazin.hockeybackend.repository.TeamRepository;
 
@@ -27,7 +27,9 @@ public class TeamService {
 
     public Team findOne(int id) {
         Optional<Team> foundTeam = teamRepository.findById(id);
-        return foundTeam.orElseThrow(NotFoundException::new);
+        return foundTeam.orElseThrow(
+                () -> new NotFoundException("Team with this id wasn`t found!")
+        );
     }
 
     @Transactional

@@ -1,4 +1,4 @@
-package ru.karmazin.hockeybackend.entity;
+package ru.karmazin.hockeybackend.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

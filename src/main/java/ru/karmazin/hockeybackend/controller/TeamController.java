@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.karmazin.hockeybackend.entity.Team;
+import ru.karmazin.hockeybackend.model.Team;
 import ru.karmazin.hockeybackend.exception.NotCreatedException;
 import ru.karmazin.hockeybackend.exception.NotFoundException;
 import ru.karmazin.hockeybackend.service.TeamService;
