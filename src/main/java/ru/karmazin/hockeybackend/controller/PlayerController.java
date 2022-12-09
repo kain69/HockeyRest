@@ -38,6 +38,32 @@ public class PlayerController {
     public ResponseEntity<HttpStatus> createPlayer(@PathVariable("team_id") int team_id,
                                                    @RequestBody @Valid Player player,
                                                    BindingResult bindingResult) {
+        validationPlayer(bindingResult);
+
+        playerService.save(player, team_id);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<HttpStatus> editPlayer(@PathVariable("id") int id,
+                                                 @RequestBody @Valid Player player,
+                                                 BindingResult bindingResult) {
+
+        validationPlayer(bindingResult);
+
+        playerService.update(player, id);
+
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<HttpStatus> deletePlayer(@PathVariable("id") int id) {
+        playerService.delete(id);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    private static void validationPlayer(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
 
@@ -50,9 +76,5 @@ public class PlayerController {
 
             throw new NotCreatedException(errorMsg.toString());
         }
-
-        playerService.save(player, team_id);
-
-        return ResponseEntity.ok(HttpStatus.OK);
     }
 }

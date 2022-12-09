@@ -38,6 +38,32 @@ public class PersonController {
     @PostMapping
     public ResponseEntity<HttpStatus> createPerson(@RequestBody @Valid Person person,
                                                    BindingResult bindingResult) {
+        validationPerson(bindingResult);
+
+        personService.save(person);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<HttpStatus> editPerson(@PathVariable("id") int id,
+                             @RequestBody @Valid Person person,
+                             BindingResult bindingResult) {
+
+        validationPerson(bindingResult);
+
+        personService.update(person, id);
+
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<HttpStatus> deletePerson(@PathVariable("id") int id) {
+        personService.delete(id);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    private static void validationPerson(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
 
@@ -50,9 +76,5 @@ public class PersonController {
 
             throw new NotCreatedException(errorMsg.toString());
         }
-
-        personService.save(person);
-
-        return ResponseEntity.ok(HttpStatus.OK);
     }
 }

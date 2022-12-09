@@ -36,4 +36,16 @@ public class PersonService {
     public void save(Person person) {
         personRepository.save(person);
     }
+
+    @Transactional
+    public void update(Person updatedPerson, int id) {
+        updatedPerson.setId(id);
+        personRepository.save(updatedPerson);
+    }
+
+    @Transactional
+    public void delete(int id) {
+        Person person = this.findOne(id);
+        personRepository.delete(person);
+    }
 }

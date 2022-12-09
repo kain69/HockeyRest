@@ -40,7 +40,7 @@ public class Person {
     @NotNull(message = "Rating should not be empty")
     private Integer rating;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnore
     private List<Player> players;
 

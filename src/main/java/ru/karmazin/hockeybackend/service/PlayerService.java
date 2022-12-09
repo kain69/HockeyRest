@@ -48,4 +48,18 @@ public class PlayerService {
 
         playerRepository.save(player);
     }
+
+    @Transactional
+    public void update(Player updatedPlayer, int id) {
+        updatedPlayer.setId(id);
+        updatedPlayer.setTeam(this.findOne(id).getTeam());
+        updatedPlayer.setPerson(this.findOne(id).getPerson());
+        playerRepository.save(updatedPlayer);
+    }
+
+    @Transactional
+    public void delete(int id) {
+        Player player = this.findOne(id);
+        playerRepository.delete(player);
+    }
 }

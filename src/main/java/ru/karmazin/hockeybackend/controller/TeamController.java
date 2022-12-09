@@ -6,11 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.karmazin.hockeybackend.model.Team;
 import ru.karmazin.hockeybackend.exception.NotCreatedException;
-import ru.karmazin.hockeybackend.exception.NotFoundException;
+import ru.karmazin.hockeybackend.model.Team;
 import ru.karmazin.hockeybackend.service.TeamService;
-import ru.karmazin.hockeybackend.util.ErrorResponse;
 
 import java.util.List;
 
@@ -39,6 +37,32 @@ public class TeamController {
     @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid Team team,
                                              BindingResult bindingResult) {
+        validationTeam(bindingResult);
+
+        teamService.save(team);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<HttpStatus> editTeam(@PathVariable("id") int id,
+                                               @RequestBody @Valid Team team,
+                                               BindingResult bindingResult) {
+
+        validationTeam(bindingResult);
+
+        teamService.update(team, id);
+
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<HttpStatus> deleteTeam(@PathVariable("id") int id) {
+        teamService.delete(id);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    private static void validationTeam(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
 
@@ -51,27 +75,6 @@ public class TeamController {
 
             throw new NotCreatedException(errorMsg.toString());
         }
-
-        teamService.save(team);
-
-        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @ExceptionHandler
-    private ResponseEntity<ErrorResponse> handleException(NotFoundException e) {
-        ErrorResponse response = new ErrorResponse(
-                "Team with this id wasn`t found!",
-                System.currentTimeMillis()
-        );
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    private ResponseEntity<ErrorResponse> handleException(NotCreatedException e) {
-        ErrorResponse response = new ErrorResponse(
-                e.getMessage(),
-                System.currentTimeMillis()
-        );
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
 }

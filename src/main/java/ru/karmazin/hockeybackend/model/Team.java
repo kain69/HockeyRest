@@ -24,7 +24,7 @@ public class Team {
     @NotEmpty(message = "Name should not be empty")
     private String name;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnore
     private List<Player> players;
 

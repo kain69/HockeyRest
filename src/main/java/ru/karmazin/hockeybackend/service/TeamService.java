@@ -2,8 +2,8 @@ package ru.karmazin.hockeybackend.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.karmazin.hockeybackend.model.Team;
 import ru.karmazin.hockeybackend.exception.NotFoundException;
+import ru.karmazin.hockeybackend.model.Team;
 import ru.karmazin.hockeybackend.repository.TeamRepository;
 
 import java.util.List;
@@ -35,5 +35,18 @@ public class TeamService {
     @Transactional
     public void save(Team team) {
         teamRepository.save(team);
+    }
+
+    @Transactional
+    public void update(Team updatedTeam, int id) {
+        updatedTeam.setPlayers(this.findOne(id).getPlayers());
+        updatedTeam.setId(id);
+        teamRepository.save(updatedTeam);
+    }
+
+    @Transactional
+    public void delete(int id) {
+        Team team = this.findOne(id);
+        teamRepository.delete(team);
     }
 }
