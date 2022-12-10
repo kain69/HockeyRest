@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import ru.karmazin.hockeybackend.dto.PlayerDto;
 import ru.karmazin.hockeybackend.exception.NotCreatedException;
-import ru.karmazin.hockeybackend.model.Player;
 import ru.karmazin.hockeybackend.service.PlayerService;
 
 import java.util.List;
@@ -25,34 +25,34 @@ public class PlayerController {
     }
 
     @GetMapping
-    public List<Player> getPlayers(@PathVariable("team_id") int team_id) {
+    public List<PlayerDto> getPlayers(@PathVariable("team_id") int team_id) {
         return playerService.findAllByTeamId(team_id);
     }
 
     @GetMapping("{id}")
-    public Player getPlayer(@PathVariable("id") int id) {
+    public PlayerDto getPlayer(@PathVariable("id") int id) {
         return playerService.findOne(id);
     }
 
     @PostMapping
     public ResponseEntity<HttpStatus> createPlayer(@PathVariable("team_id") int team_id,
-                                                   @RequestBody @Valid Player player,
+                                                   @RequestBody @Valid PlayerDto playerDto,
                                                    BindingResult bindingResult) {
         validationPlayer(bindingResult);
 
-        playerService.save(player, team_id);
+        playerService.save(playerDto, team_id);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("{id}")
     public ResponseEntity<HttpStatus> editPlayer(@PathVariable("id") int id,
-                                                 @RequestBody @Valid Player player,
+                                                 @RequestBody @Valid PlayerDto playerDto,
                                                  BindingResult bindingResult) {
 
         validationPlayer(bindingResult);
 
-        playerService.update(player, id);
+        playerService.update(playerDto, id);
 
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }

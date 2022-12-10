@@ -1,13 +1,15 @@
 package ru.karmazin.hockeybackend.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import ru.karmazin.hockeybackend.dto.PersonDto;
+import ru.karmazin.hockeybackend.dto.SimplePersonDto;
 import ru.karmazin.hockeybackend.exception.NotCreatedException;
-import ru.karmazin.hockeybackend.model.Person;
 import ru.karmazin.hockeybackend.service.PersonService;
 
 import java.util.List;
@@ -17,42 +19,39 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/people")
+@RequiredArgsConstructor
 public class PersonController {
 
     private final PersonService personService;
 
-    public PersonController(PersonService personService) {
-        this.personService = personService;
-    }
-
     @GetMapping
-    public List<Person> getPeople() {
+    public List<SimplePersonDto> getPeople() {
         return personService.findAll();
     }
 
     @GetMapping("{id}")
-    public Person getPerson(@PathVariable int id) {
+    public PersonDto getPerson(@PathVariable int id) {
         return personService.findOne(id);
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> createPerson(@RequestBody @Valid Person person,
+    public ResponseEntity<HttpStatus> createPerson(@RequestBody @Valid PersonDto personDto,
                                                    BindingResult bindingResult) {
         validationPerson(bindingResult);
 
-        personService.save(person);
+        personService.save(personDto);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("{id}")
     public ResponseEntity<HttpStatus> editPerson(@PathVariable("id") int id,
-                             @RequestBody @Valid Person person,
+                             @RequestBody @Valid PersonDto personDto,
                              BindingResult bindingResult) {
 
         validationPerson(bindingResult);
 
-        personService.update(person, id);
+        personService.update(personDto, id);
 
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }

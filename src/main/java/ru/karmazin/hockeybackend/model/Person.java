@@ -1,6 +1,5 @@
 package ru.karmazin.hockeybackend.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -33,7 +32,6 @@ public class Person {
     @NotEmpty(message = "Patronymic should not be empty")
     private String patronymic;
     @NotNull(message = "Birthday should not be empty")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private LocalDate birthday;
     @Min(value = 0, message = "Rating should be between 0 and 5")
     @Max(value = 5, message = "Rating should be between 0 and 5")
