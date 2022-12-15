@@ -3,8 +3,8 @@ package ru.karmazin.hockeybackend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.karmazin.hockeybackend.dto.SimpleTeamDto;
-import ru.karmazin.hockeybackend.dto.TeamDto;
+import ru.karmazin.hockeybackend.dto.team.TeamCreateUpdateDto;
+import ru.karmazin.hockeybackend.dto.team.TeamDto;
 import ru.karmazin.hockeybackend.exception.NotFoundException;
 import ru.karmazin.hockeybackend.mapper.TeamMapper;
 import ru.karmazin.hockeybackend.model.Team;
@@ -23,8 +23,8 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
 
-    public List<SimpleTeamDto> findAll() {
-        return teamMapper.toSimpleTeamDtos(teamRepository.findAll());
+    public List<TeamDto> findAll() {
+        return teamMapper.toTeamDtos(teamRepository.findAll());
     }
 
     public TeamDto findOne(int id) {
@@ -32,15 +32,15 @@ public class TeamService {
     }
 
     @Transactional
-    public void save(SimpleTeamDto simpleTeamDto) {
-        teamRepository.save(teamMapper.toTeam(simpleTeamDto));
+    public void save(TeamCreateUpdateDto teamDto) {
+        teamRepository.save(teamMapper.toTeam(teamDto));
     }
 
     @Transactional
-    public void update(SimpleTeamDto updatedTeamDto, int id) {
-        Team updatedTeam = teamMapper.toTeam(updatedTeamDto);
-        updatedTeam.setPlayers(this.getTeam(id).getPlayers());
-        teamRepository.save(updatedTeam);
+    public void update(TeamCreateUpdateDto teamUpdateDto, int id) {
+        Team team = this.getTeam(id);
+        teamMapper.update(team, teamUpdateDto);
+        teamRepository.save(team);
     }
 
     @Transactional

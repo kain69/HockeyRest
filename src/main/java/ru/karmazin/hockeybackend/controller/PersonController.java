@@ -8,8 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.karmazin.hockeybackend.dto.PersonDto;
-import ru.karmazin.hockeybackend.dto.SimplePersonDto;
+import ru.karmazin.hockeybackend.dto.person.PersonCreateUpdateDto;
+import ru.karmazin.hockeybackend.dto.person.PersonDto;
+import ru.karmazin.hockeybackend.dto.person.SimplePersonDto;
 import ru.karmazin.hockeybackend.exception.NotCreatedException;
 import ru.karmazin.hockeybackend.service.PersonService;
 
@@ -37,23 +38,23 @@ public class PersonController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> createPerson(@RequestBody @Valid PersonDto personDto,
+    public ResponseEntity<HttpStatus> createPerson(@RequestBody @Valid PersonCreateUpdateDto personCreateDto,
                                                    BindingResult bindingResult) {
         validationPerson(bindingResult);
 
-        personService.save(personDto);
+        personService.save(personCreateDto);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("{id}")
     public ResponseEntity<HttpStatus> editPerson(@PathVariable("id") int id,
-                             @RequestBody @Valid PersonDto personDto,
+                             @RequestBody @Valid PersonCreateUpdateDto personUpdateDto,
                              BindingResult bindingResult) {
 
         validationPerson(bindingResult);
 
-        personService.update(personDto, id);
+        personService.update(personUpdateDto, id);
 
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }

@@ -1,11 +1,9 @@
-package ru.karmazin.hockeybackend.dto;
+package ru.karmazin.hockeybackend.dto.team;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.karmazin.hockeybackend.model.Player;
-
-import java.util.List;
 
 /**
  * @author Vladislav Karmazin
@@ -13,8 +11,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "Команда")
 public class TeamDto {
+    @Schema(description = "Идентификатор")
     private int id;
+    @Schema(description = "Название")
     private String name;
-    private List<Player> players;
 }

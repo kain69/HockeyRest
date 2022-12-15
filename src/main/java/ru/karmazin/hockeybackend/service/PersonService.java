@@ -3,8 +3,9 @@ package ru.karmazin.hockeybackend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.karmazin.hockeybackend.dto.PersonDto;
-import ru.karmazin.hockeybackend.dto.SimplePersonDto;
+import ru.karmazin.hockeybackend.dto.person.PersonCreateUpdateDto;
+import ru.karmazin.hockeybackend.dto.person.PersonDto;
+import ru.karmazin.hockeybackend.dto.person.SimplePersonDto;
 import ru.karmazin.hockeybackend.mapper.PersonMapper;
 import ru.karmazin.hockeybackend.model.Person;
 import ru.karmazin.hockeybackend.exception.NotFoundException;
@@ -32,16 +33,16 @@ public class PersonService {
     }
 
     @Transactional
-    public void save(PersonDto personDto) {
-        Person person = personMapper.toPerson(personDto);
+    public void save(PersonCreateUpdateDto personCreateDto) {
+        Person person = personMapper.toPerson(personCreateDto);
         personRepository.save(person);
     }
 
     @Transactional
-    public void update(PersonDto updatedPersonDto, int id) {
-        Person updatedPerson = personMapper.toPerson(updatedPersonDto);
-        updatedPerson.setPlayers(this.getPerson(id).getPlayers());
-        personRepository.save(updatedPerson);
+    public void update(PersonCreateUpdateDto personUpdateDto, int id) {
+        Person person = this.getPerson(id);
+        personMapper.update(person, personUpdateDto);
+        personRepository.save(person);
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package ru.karmazin.hockeybackend.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -7,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.karmazin.hockeybackend.dto.SimpleTeamDto;
-import ru.karmazin.hockeybackend.dto.TeamDto;
+import ru.karmazin.hockeybackend.dto.team.TeamCreateUpdateDto;
+import ru.karmazin.hockeybackend.dto.team.TeamDto;
 import ru.karmazin.hockeybackend.exception.NotCreatedException;
 import ru.karmazin.hockeybackend.service.TeamService;
 
@@ -20,11 +21,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/teams")
 @RequiredArgsConstructor
+@Tag(name = "Команда", description = "Методы для работы с командами")
 public class TeamController {
     private final TeamService teamService;
 
     @GetMapping
-    public List<SimpleTeamDto> getTeams() {
+    public List<TeamDto> getTeams() {
         return teamService.findAll();
     }
 
@@ -34,23 +36,23 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid SimpleTeamDto simpleTeamDto,
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid TeamCreateUpdateDto teamDto,
                                              BindingResult bindingResult) {
         validationTeam(bindingResult);
 
-        teamService.save(simpleTeamDto);
+        teamService.save(teamDto);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("{id}")
     public ResponseEntity<HttpStatus> editTeam(@PathVariable("id") int id,
-                                               @RequestBody @Valid SimpleTeamDto simpleTeamDto,
+                                               @RequestBody @Valid TeamCreateUpdateDto teamUpdateDto,
                                                BindingResult bindingResult) {
 
         validationTeam(bindingResult);
 
-        teamService.update(simpleTeamDto, id);
+        teamService.update(teamUpdateDto, id);
 
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }

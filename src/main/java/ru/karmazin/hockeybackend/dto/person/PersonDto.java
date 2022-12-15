@@ -1,4 +1,4 @@
-package ru.karmazin.hockeybackend.dto;
+package ru.karmazin.hockeybackend.dto.person;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

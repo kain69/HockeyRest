@@ -1,12 +1,15 @@
 package ru.karmazin.hockeybackend.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.karmazin.hockeybackend.dto.PlayerDto;
+import ru.karmazin.hockeybackend.dto.player.PlayerCreateUpdateDto;
+import ru.karmazin.hockeybackend.dto.player.PlayerDto;
 import ru.karmazin.hockeybackend.exception.NotCreatedException;
 import ru.karmazin.hockeybackend.service.PlayerService;
 
@@ -17,12 +20,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/teams/{team_id}/players")
+@RequiredArgsConstructor
+@Tag(name = "Игрок", description = "Методы для работы с игроками")
 public class PlayerController {
     private final PlayerService playerService;
-
-    public PlayerController(PlayerService playerService) {
-        this.playerService = playerService;
-    }
 
     @GetMapping
     public List<PlayerDto> getPlayers(@PathVariable("team_id") int team_id) {
@@ -36,7 +37,7 @@ public class PlayerController {
 
     @PostMapping
     public ResponseEntity<HttpStatus> createPlayer(@PathVariable("team_id") int team_id,
-                                                   @RequestBody @Valid PlayerDto playerDto,
+                                                   @RequestBody @Valid PlayerCreateUpdateDto playerDto,
                                                    BindingResult bindingResult) {
         validationPlayer(bindingResult);
 
@@ -47,12 +48,13 @@ public class PlayerController {
 
     @PatchMapping("{id}")
     public ResponseEntity<HttpStatus> editPlayer(@PathVariable("id") int id,
-                                                 @RequestBody @Valid PlayerDto playerDto,
+                                                 @PathVariable("team_id") int team_id,
+                                                 @RequestBody @Valid PlayerCreateUpdateDto playerUpdateDto,
                                                  BindingResult bindingResult) {
 
         validationPlayer(bindingResult);
 
-        playerService.update(playerDto, id);
+        playerService.update(playerUpdateDto, id, team_id);
 
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
