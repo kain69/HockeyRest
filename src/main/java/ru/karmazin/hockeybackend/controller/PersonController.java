@@ -1,5 +1,6 @@
 package ru.karmazin.hockeybackend.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/people")
 @RequiredArgsConstructor
+@Tag(name = "Человек", description = "Методы для работы с сущностью человека")
 public class PersonController {
 
     private final PersonService personService;
