@@ -1,6 +1,5 @@
 package ru.karmazin.hockeybackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -17,7 +16,7 @@ import java.util.List;
  * @author Vladislav Karmazin
  */
 @Entity
-@Table(name = "Person")
+@Table(name = "person")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -39,7 +38,6 @@ public class Person {
     private Integer rating;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<Player> players;
 
     public Person(String name, String surname, String patronymic, LocalDate birthday, Integer rating) {

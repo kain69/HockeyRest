@@ -1,7 +1,7 @@
 spring:
   datasource:
-    username: vlad
-    url: jdbc:postgresql://localhost:5432/hockeydbrest
+    url: jdbc:postgresql://localhost:5432/hockeyrestdb
+    username: postgres
     password: postgres
   jpa:
     generate-ddl: 'true'

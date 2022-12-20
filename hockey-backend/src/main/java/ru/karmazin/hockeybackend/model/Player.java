@@ -1,11 +1,12 @@
 package ru.karmazin.hockeybackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * @author Vladislav Karmazin
@@ -14,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Player")
+@Table(name = "player")
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,14 +28,17 @@ public class Player {
 
     @ManyToOne
     @JoinColumn(name = "team_id")
-    @JsonIgnore
     private Team team;
 
     @NotNull(message = "Number shouldn`t be null")
     private int number;
 
     @NotNull(message = "Role shouldn`t be null")
+    @Enumerated(EnumType.STRING)
     private PlayerRole role;
+
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Position> positions;
 
     public Player(Person person, Team team, int number, PlayerRole role) {
         this.person = person;
