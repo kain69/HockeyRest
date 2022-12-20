@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.karmazin.hockeybackend.dto.team.TeamCreateUpdateDto;
-import ru.karmazin.hockeybackend.dto.team.TeamDto;
+import ru.karmazin.hockeybackend.dto.team.SimpleTeamDto;
 import ru.karmazin.hockeybackend.exception.NotCreatedException;
 import ru.karmazin.hockeybackend.service.TeamService;
 
@@ -26,12 +26,12 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping
-    public List<TeamDto> getTeams() {
+    public List<SimpleTeamDto> getTeams() {
         return teamService.findAll();
     }
 
     @GetMapping("{id}")
-    public TeamDto getTeam(@PathVariable int id) {
+    public SimpleTeamDto getTeam(@PathVariable int id) {
         return teamService.findOne(id);
     }
 

@@ -38,7 +38,7 @@ public class Player {
     private PlayerRole role;
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Position> positions;
+    private List<PlayerLine> playerLines;
 
     public Player(Person person, Team team, int number, PlayerRole role) {
         this.person = person;

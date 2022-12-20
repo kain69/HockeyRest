@@ -10,15 +10,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Position {
+public class ApprovedPlayer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "player_id")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id")
+    @MapsId
     private Player player;
+
     @ManyToOne
-    @JoinColumn(name = "player_id")
-    private Line line;
+    @JoinColumn(name = "game_id")
+    private Game game;
+
+    private boolean isReady;
 }

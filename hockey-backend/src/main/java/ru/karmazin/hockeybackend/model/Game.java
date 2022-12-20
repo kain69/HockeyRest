@@ -37,8 +37,14 @@ public class Game {
 
     private int opponentResult;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "game_line",
+            joinColumns = @JoinColumn(name = "game_id"),
+            inverseJoinColumns = @JoinColumn(name = "line_id"))
+    private List<Line> lines;
+
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Plan> plans;
+    private List<ApprovedPlayer> approvedPlayers;
 
     public Game(Team team, Place place, LocalDate date, String opponent, Boolean isWon, int teamResult, int opponentResult) {
         this.team = team;

@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import ru.karmazin.hockeybackend.dto.team.TeamCreateUpdateDto;
-import ru.karmazin.hockeybackend.dto.team.TeamDto;
+import ru.karmazin.hockeybackend.dto.team.SimpleTeamDto;
 import ru.karmazin.hockeybackend.model.Team;
 
 import java.util.List;
@@ -15,9 +15,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TeamMapper {
 
-    TeamDto toTeamDto(Team team);
+    SimpleTeamDto toSimpleTeamDto(Team team);
 
-    List<TeamDto> toTeamDtos(List<Team> teams);
+    List<SimpleTeamDto> toSimpleTeamDtos(List<Team> teams);
 
 
     @Mapping(target = "id", ignore = true)

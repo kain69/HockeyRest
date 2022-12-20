@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.karmazin.hockeybackend.dto.team.TeamCreateUpdateDto;
-import ru.karmazin.hockeybackend.dto.team.TeamDto;
+import ru.karmazin.hockeybackend.dto.team.SimpleTeamDto;
 import ru.karmazin.hockeybackend.exception.NotFoundException;
 import ru.karmazin.hockeybackend.mapper.TeamMapper;
 import ru.karmazin.hockeybackend.model.Team;
@@ -23,12 +23,12 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
 
-    public List<TeamDto> findAll() {
-        return teamMapper.toTeamDtos(teamRepository.findAll());
+    public List<SimpleTeamDto> findAll() {
+        return teamMapper.toSimpleTeamDtos(teamRepository.findAll());
     }
 
-    public TeamDto findOne(int id) {
-        return teamMapper.toTeamDto(this.getTeam(id));
+    public SimpleTeamDto findOne(int id) {
+        return teamMapper.toSimpleTeamDto(this.getTeam(id));
     }
 
     @Transactional

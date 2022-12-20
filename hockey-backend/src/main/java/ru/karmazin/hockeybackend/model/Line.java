@@ -24,8 +24,11 @@ public class Line {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @OneToMany(mappedBy = "line",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Position> positions;
+    @ManyToMany(mappedBy = "lines")
+    private List<Game> games;
+
+    @OneToMany(mappedBy = "line", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PlayerLine> playerLines;
 
 
     public Line(String name, Team team) {

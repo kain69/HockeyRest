@@ -8,19 +8,19 @@ import lombok.NoArgsConstructor;
  * @author Vlad Karmazin
  */
 @Entity
-@Table(name = "plan")
+@Table(name = "player_line")
 @Data
 @NoArgsConstructor
-public class Plan {
+public class PlayerLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private int position;
+    @ManyToOne
+    @JoinColumn(name = "player_id")
+    private Player player;
     @ManyToOne
     @JoinColumn(name = "line_id")
     private Line line;
-
-    @ManyToOne
-    @JoinColumn(name = "game_id")
-    private Game game;
 }
