@@ -21,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GameService {
     private final GameRepository gameRepository;
+//    private final ApprovedPlayerService approvedPlayerService;
     private final GameMapper gameMapper;
 
     public List<GameDto> findAllByTeam(int team_id) {
@@ -34,6 +35,7 @@ public class GameService {
     @Transactional
     public void save(GameCreateUpdateDto gameCreateDto, int team_id) {
         Game game = gameMapper.toGame(gameCreateDto, team_id);
+//        game.setApprovedPlayers(approvedPlayerService.create(team_id));
         gameRepository.save(game);
     }
 

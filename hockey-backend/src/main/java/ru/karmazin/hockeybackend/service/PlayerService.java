@@ -52,7 +52,7 @@ public class PlayerService {
         playerRepository.delete(this.getPlayer(id));
     }
 
-    private Player getPlayer(int id) {
+    public Player getPlayer(int id) {
         Optional<Player> foundPlayer = playerRepository.findById(id);
         return foundPlayer.orElseThrow(
                 () -> new NotFoundException("Player with this id wasn`t found!")

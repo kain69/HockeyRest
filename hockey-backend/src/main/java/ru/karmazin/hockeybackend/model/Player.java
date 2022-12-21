@@ -38,6 +38,9 @@ public class Player {
     private PlayerRole role;
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ApprovedPlayer> approvedPlayers;
+
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PlayerLine> playerLines;
 
     public Player(Person person, Team team, int number, PlayerRole role) {
