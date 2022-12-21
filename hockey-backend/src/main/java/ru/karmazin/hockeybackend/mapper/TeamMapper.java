@@ -22,9 +22,13 @@ public interface TeamMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "players", ignore = true)
+    @Mapping(target = "lines", ignore = true)
+    @Mapping(target = "games", ignore = true)
     Team toTeam(TeamCreateUpdateDto teamDto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "players", ignore = true)
+    @Mapping(target = "lines", ignore = true)
+    @Mapping(target = "games", ignore = true)
     void update(@MappingTarget Team team, TeamCreateUpdateDto teamUpdateDto);
 }

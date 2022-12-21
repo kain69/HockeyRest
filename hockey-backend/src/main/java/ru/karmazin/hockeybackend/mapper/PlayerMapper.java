@@ -25,10 +25,12 @@ public interface PlayerMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "team", source = "team_id")
     @Mapping(target = "person", source = "playerDto.personId")
+    @Mapping(target = "playerLines", ignore = true)
     Player toPlayer(PlayerCreateUpdateDto playerDto, int team_id);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "team", source = "team_id")
     @Mapping(target = "person", source = "playerUpdateDto.personId")
+    @Mapping(target = "playerLines", ignore = true)
     void update(@MappingTarget Player player, PlayerCreateUpdateDto playerUpdateDto, int team_id);
 }

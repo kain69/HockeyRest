@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GameCreateUpdateDto {
-    private int team_id;
     private String opponent;
     private int place_id;
     private String date;
