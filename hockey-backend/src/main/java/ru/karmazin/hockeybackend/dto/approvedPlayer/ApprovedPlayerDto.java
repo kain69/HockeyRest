@@ -3,7 +3,6 @@ package ru.karmazin.hockeybackend.dto.approvedPlayer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.karmazin.hockeybackend.dto.player.PlayerDto;
 
 /**
  * @author Vlad Karmazin
@@ -12,6 +11,10 @@ import ru.karmazin.hockeybackend.dto.player.PlayerDto;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApprovedPlayerDto {
-    private PlayerDto playerDto;
+    private int id;
+    private int player_id;
+    private String name;
+    private String surname;
+    private int number;
     private boolean isReady;
 }

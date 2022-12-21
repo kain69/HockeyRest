@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@Table(name = "approved_player")
 public class ApprovedPlayer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
-    @MapsId
+    @ManyToOne
+    @JoinColumn(name = "player_id")
     private Player player;
 
     @ManyToOne
