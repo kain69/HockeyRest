@@ -31,7 +31,7 @@ public interface PersonMapper {
         );
     }
 
-    List<SimplePersonDto> toSimplePersonDtos(List<Person> person);
+    List<SimplePersonDto> toSimplePersonDtos(List<Person> people);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "players", ignore = true)
