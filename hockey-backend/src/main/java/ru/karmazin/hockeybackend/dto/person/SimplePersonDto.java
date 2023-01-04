@@ -17,7 +17,7 @@ public class SimplePersonDto {
     private int id;
     @Schema(description = "Имя")
     private String name;
-    @Schema(description = "Кармазин")
+    @Schema(description = "Фамилия")
     private String surname;
     @Schema(description = "Рейтинг")
     private Integer rating;
