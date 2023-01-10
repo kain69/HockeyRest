@@ -1,5 +1,6 @@
 package ru.karmazin.hockeybackend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,16 +27,19 @@ public class PlayerController {
     private final PlayerService playerService;
 
     @GetMapping
+    @Operation(summary = "Получение списка всех игроков конкретной команды")
     public List<PlayerDto> getPlayers(@PathVariable("team_id") int team_id) {
         return playerService.findAllByTeamId(team_id);
     }
 
     @GetMapping("{id}")
+    @Operation(summary = "Получение информации игрока")
     public PlayerDto getPlayer(@PathVariable("id") int id) {
         return playerService.findOne(id);
     }
 
     @PostMapping
+    @Operation(summary = "Создание игрока")
     public ResponseEntity<HttpStatus> createPlayer(@PathVariable("team_id") int team_id,
                                                    @RequestBody @Valid PlayerCreateUpdateDto playerDto,
                                                    BindingResult bindingResult) {
@@ -47,6 +51,7 @@ public class PlayerController {
     }
 
     @PatchMapping("{id}")
+    @Operation(summary = "Редактирование данных игрока")
     public ResponseEntity<HttpStatus> editPlayer(@PathVariable("id") int id,
                                                  @PathVariable("team_id") int team_id,
                                                  @RequestBody @Valid PlayerCreateUpdateDto playerUpdateDto,
@@ -60,6 +65,7 @@ public class PlayerController {
     }
 
     @DeleteMapping("{id}")
+    @Operation(summary = "Удаление игрока")
     public ResponseEntity<HttpStatus> deletePlayer(@PathVariable("id") int id) {
         playerService.delete(id);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);

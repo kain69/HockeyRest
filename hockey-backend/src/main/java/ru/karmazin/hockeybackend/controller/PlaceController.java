@@ -1,5 +1,7 @@
 package ru.karmazin.hockeybackend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,26 +19,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/places")
 @RequiredArgsConstructor
+@Tag(name = "Стадион", description = "Методы для работы со стадионами")
 public class PlaceController {
     private final PlaceService placeService;
 
     @GetMapping
+    @Operation(summary = "Получение списка всех стадионов")
     public List<PlaceDto> getPlaces() {
         return placeService.findAll();
     }
 
     @GetMapping("{id}")
+    @Operation(summary = "Получение информации о стадионе")
     public PlaceDto getPlace(@PathVariable("id") int id) {
         return placeService.findOne(id);
     }
 
     @PostMapping
+    @Operation(summary = "Создание нового стадиона")
     public ResponseEntity<HttpStatus> createPlace(@RequestBody @Valid PlaceCreateUpdateDto placeDto) {
         placeService.save(placeDto);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("{id}")
+    @Operation(summary = "Редактирование стадиона")
     public ResponseEntity<HttpStatus> editPlace(@PathVariable("id") int id,
                                                 @RequestBody @Valid PlaceCreateUpdateDto placeUpdateDto) {
         placeService.update(placeUpdateDto, id);
@@ -44,6 +51,7 @@ public class PlaceController {
     }
 
     @DeleteMapping("{id}")
+    @Operation(summary = "Удаление стадиона")
     public ResponseEntity<HttpStatus> deletePlace(@PathVariable("id") int id) {
         placeService.delete(id);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);

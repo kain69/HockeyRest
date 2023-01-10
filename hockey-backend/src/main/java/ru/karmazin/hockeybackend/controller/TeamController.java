@@ -1,5 +1,6 @@
 package ru.karmazin.hockeybackend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,16 +27,19 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping
+    @Operation(summary = "Получение списка всех команд")
     public List<SimpleTeamDto> getTeams() {
         return teamService.findAll();
     }
 
     @GetMapping("{id}")
+    @Operation(summary = "Получение информации о команде")
     public SimpleTeamDto getTeam(@PathVariable int id) {
         return teamService.findOne(id);
     }
 
     @PostMapping
+    @Operation(summary = "Создание новой команды")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid TeamCreateUpdateDto teamDto,
                                              BindingResult bindingResult) {
         validationTeam(bindingResult);
@@ -46,6 +50,7 @@ public class TeamController {
     }
 
     @PatchMapping("{id}")
+    @Operation(summary = "Редактирование команды")
     public ResponseEntity<HttpStatus> editTeam(@PathVariable("id") int id,
                                                @RequestBody @Valid TeamCreateUpdateDto teamUpdateDto,
                                                BindingResult bindingResult) {
@@ -58,6 +63,7 @@ public class TeamController {
     }
 
     @DeleteMapping("{id}")
+    @Operation(summary = "Удаление команды")
     public ResponseEntity<HttpStatus> deleteTeam(@PathVariable("id") int id) {
         teamService.delete(id);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);

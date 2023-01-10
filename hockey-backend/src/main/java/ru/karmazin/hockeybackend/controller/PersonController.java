@@ -1,5 +1,6 @@
 package ru.karmazin.hockeybackend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +29,19 @@ public class PersonController {
     private final PersonService personService;
 
     @GetMapping
+    @Operation(summary = "Получение списка всех людей")
     public List<SimplePersonDto> getPeople() {
         return personService.findAll();
     }
 
     @GetMapping("{id}")
+    @Operation(summary = "Получение информации о человеке")
     public PersonDto getPerson(@PathVariable int id) {
         return personService.findOne(id);
     }
 
     @PostMapping
+    @Operation(summary = "Создание человека")
     public ResponseEntity<HttpStatus> createPerson(@RequestBody @Valid PersonCreateUpdateDto personCreateDto,
                                                    BindingResult bindingResult) {
         validationPerson(bindingResult);
@@ -48,6 +52,7 @@ public class PersonController {
     }
 
     @PatchMapping("{id}")
+    @Operation(summary = "Редактирование данных человека")
     public ResponseEntity<HttpStatus> editPerson(@PathVariable("id") int id,
                              @RequestBody @Valid PersonCreateUpdateDto personUpdateDto,
                              BindingResult bindingResult) {
@@ -60,6 +65,7 @@ public class PersonController {
     }
 
     @DeleteMapping("{id}")
+    @Operation(summary = "Удаление человека")
     public ResponseEntity<HttpStatus> deletePerson(@PathVariable("id") int id) {
         personService.delete(id);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
